@@ -5,11 +5,16 @@ using FCEffectDecoupler.HarmonyPatches;
 
 namespace FCEffectDecoupler {
 
+
+    [Plugin(RuntimeOptions.SingleStartInit)]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Build", "CA1812:Avoid unistantiated internal classes", Justification = "Instantiated by BSIPA")]
-    internal class Plugin:IBeatSaberPlugin {
+    internal class Plugin {
         static bool runOnce;
+        [OnStart]
         public void OnApplicationStart() {
             BSEvents.OnLoad();
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            SceneManager.sceneUnloaded += OnSceneUnloaded;
         }
         public void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode) {
             if(scene.name == "MenuCore" && !runOnce) {
@@ -23,9 +28,5 @@ namespace FCEffectDecoupler {
                 Decoupler.HideEffect();
             }
         }
-        public void OnActiveSceneChanged(Scene prevScene, Scene nextScene) { }
-        public void OnUpdate() { }
-        public void OnFixedUpdate() { }
-        public void OnApplicationQuit() { }
     }
 }

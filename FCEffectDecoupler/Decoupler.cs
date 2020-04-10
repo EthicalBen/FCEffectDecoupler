@@ -21,8 +21,8 @@ namespace FCEffectDecoupler {
             instance = new GameObject("FCEffectMB").AddComponent<FCEffectMB>();
             SceneManager.MoveGameObjectToScene(instance.gameObject, FCScene.Value);
         }
-        internal static void ReInitFCEffectMB(int lastNoteId, BeatmapObjectSpawnController beatmapObjectSpawnController) {
-            instance.ReInit(lastNoteId, beatmapObjectSpawnController);
+        internal static void ReInitFCEffectMB(int lastNoteId) {
+            instance.ReInit(lastNoteId);
         }
         internal static void HideEffect() {
             instance.Hide();

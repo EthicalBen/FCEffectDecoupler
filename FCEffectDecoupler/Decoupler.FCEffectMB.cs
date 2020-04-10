@@ -17,13 +17,13 @@ namespace FCEffectDecoupler {
                 BSEvents.levelQuit += Hide;
                 BSEvents.comboDidBreak += ComboBreak;
             }
-            internal void ReInit(int lastNoteId, BeatmapObjectSpawnController beatmapObjectSpawnController) {
+            internal void ReInit(int lastNoteId) {
                 this.lastNoteId = lastNoteId;
-                beatmapObjectSpawnController.noteWasCutEvent -= LastNoteCheck;
-                beatmapObjectSpawnController.noteWasCutEvent += LastNoteCheck;
+                BSEvents.noteWasCut -= LastNoteCheck;
+                BSEvents.noteWasCut += LastNoteCheck;
             }
-            private void LastNoteCheck(BeatmapObjectSpawnController arg1, INoteController arg2, NoteCutInfo arg3) {
-                if(arg2.noteData.id == lastNoteId && arg3.allIsOK && !comboBreak) {
+            private void LastNoteCheck(NoteData arg1, NoteCutInfo arg2, int arg3) {
+                if(arg1.id == lastNoteId && arg2.allIsOK && !comboBreak) {
                     FCEffect.SetActive(true);
                     coroutine = FallbackHide(timeoutLength);
                     StartCoroutine(coroutine);
@@ -43,6 +43,11 @@ namespace FCEffectDecoupler {
                 comboBreak = false;
                 FCEffect.SetActive(false);
                 StopCoroutine(coroutine);
+            }
+            private void Update() {
+                if(Input.GetKeyDown(KeyCode.KeypadDivide)) {
+                    FCEffect.SetActive(!FCEffect.activeSelf);
+                }
             }
         }
     }

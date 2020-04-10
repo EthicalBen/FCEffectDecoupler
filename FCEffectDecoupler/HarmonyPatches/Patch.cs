@@ -1,4 +1,4 @@
-﻿using Harmony;
+﻿using HarmonyLib;
 using System;
 using System.Reflection;
 
@@ -13,12 +13,12 @@ namespace FCEffectDecoupler.HarmonyPatches {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Bugs in Harmony require this to be present")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Build", "CA1801:Review unused parameters", Justification = "Bugs in Harmony require this to be present")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "Fuck off")]
-        public static MethodBase Target(HarmonyInstance instance) => Type.GetType("CustomSaber.Utilities.SaberScript, CustomSaber").GetMethod("AddEvents", BindingFlags.NonPublic | BindingFlags.Instance);
+        public static MethodBase Target() => Type.GetType("CustomSaber.Utilities.SaberScript, CustomSaber").GetMethod("AddEvents", BindingFlags.NonPublic | BindingFlags.Instance);
         
 
         [HarmonyPostfix]
-        public static void Postfix(int ___lastNoteId, BeatmapObjectSpawnController ___beatmapObjectSpawnController) {
-            Decoupler.ReInitFCEffectMB(___lastNoteId, ___beatmapObjectSpawnController);
+        public static void Postfix(int ___lastNoteId) {
+            Decoupler.ReInitFCEffectMB(___lastNoteId);
         }
     }
 }

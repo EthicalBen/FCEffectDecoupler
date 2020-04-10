@@ -1,5 +1,4 @@
-﻿using Harmony;
-using System.Reflection;
+﻿using HarmonyLib;
 
 namespace FCEffectDecoupler.HarmonyPatches {
 
@@ -21,7 +20,7 @@ namespace FCEffectDecoupler.HarmonyPatches {
         /// </summary>
         internal static void Patch() {
             if(!runOnce) {
-                HarmonyInstance.Create("com.rolopogo.customplatforms").PatchAll(Assembly.GetExecutingAssembly());
+                new Harmony("Uialeth.FCEffectDecoupler").PatchAll();
                 runOnce = true;
             }
         }
